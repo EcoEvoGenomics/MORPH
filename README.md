@@ -103,4 +103,4 @@ Thank you for using MORPH. We kindly encourage you to cite the following resourc
 The script section in process [`RENAME_REFERENCE_CONTIGS`](MORPH.nf) was developed with assistance of [GLM 5.2](https://gpt.uio.no/en), an open-weight reasoning model hosted on [NTNU](https://www.ntnu.no/) infrastructure.
 
 ---
-MORPH v. 0.0.1a | 2026 | Erik Sandertun Røed | https://github.com/EcoEvoGenomics/MORPH
+MORPH v. 1.0.0 | 2026 | Erik Sandertun Røed | https://github.com/EcoEvoGenomics/MORPH
