@@ -41,8 +41,8 @@ process RENAME_REFERENCE_CONTIGS {
     path(gff)
 
     output:
-    path("${fasta.simpleName}.morph.fasta"), emit: fasta
-    path("${gff.simpleName}.morph.gff"), emit: gff
+    path("${fasta.baseName}.morph.fasta"), emit: fasta
+    path("${gff.baseName}.morph.gff"), emit: gff
 
     script:
     """
@@ -52,10 +52,12 @@ process RENAME_REFERENCE_CONTIGS {
     morphs = {}
     with open("${morphs.toString()}") as morph_table:
         for row in morph_table:
-            find, replace = row.rstrip("\\n").split("\\t")
+            if not row.strip():
+                continue
+            find, replace = row.rstrip().split("\\t")
             morphs[find] = replace
     
-    with open("${fasta.toString()}") as fasta, open("${fasta.simpleName}.morph.fasta", "w") as morphed:
+    with open("${fasta.toString()}") as fasta, open("${fasta.baseName}.morph.fasta", "w") as morphed:
         contig_marker = ">"
         for line in fasta:
             if line.startswith(contig_marker):
@@ -66,7 +68,7 @@ process RENAME_REFERENCE_CONTIGS {
                     line = f">{morphs[contig_name]} {contig_meta}" if contig_meta else f">{morphs[contig_name]}\\n"
             morphed.write(line)
     
-    with open("${gff.toString()}") as gff, open("${gff.simpleName}.morph.gff", "w") as morphed:
+    with open("${gff.toString()}") as gff, open("${gff.baseName}.morph.gff", "w") as morphed:
         for row in gff:
             skip_row = row.startswith("#") or not row.strip()
             if skip_row:
