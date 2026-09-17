@@ -52,7 +52,9 @@ process RENAME_REFERENCE_CONTIGS {
     morphs = {}
     with open("${morphs.toString()}") as morph_table:
         for row in morph_table:
-            find, replace = row.rstrip("\\n").split("\\t")
+            if not row.strip():
+                continue
+            find, replace = row.rstrip().split("\\t")
             morphs[find] = replace
     
     with open("${fasta.toString()}") as fasta, open("${fasta.simpleName}.morph.fasta", "w") as morphed:
